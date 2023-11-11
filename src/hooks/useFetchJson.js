@@ -11,14 +11,11 @@ export default function useFetchJson(url, options = { method: 'GET' }) {
       if (canceled) { return; }
 
       setPending(true);
-
       try {
         const response = await fetch(`${url}`, options);
-
         if (!response.ok) throw new Error(response.statusText);
 
         const data = await response.json();
-
         if (!canceled) { setData(data); }
       } catch (error) {
         setError(error);
