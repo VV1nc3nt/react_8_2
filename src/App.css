@@ -1,0 +1,17 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.box {
+  padding: 16px;
+  margin: 24px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.box-wrapper {
+  display: flex;
+}
