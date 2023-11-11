@@ -6,8 +6,12 @@ export default function useFetchJson(url, options = { method: 'GET' }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let canceled = false;
     const fetchData = async () => {
+      if (canceled) { return; }
+
       setPending(true);
+
       try {
         const response = await fetch(`${url}`, options);
 
@@ -15,7 +19,7 @@ export default function useFetchJson(url, options = { method: 'GET' }) {
 
         const data = await response.json();
 
-        setData(data);
+        if (!canceled) { setData(data); }
       } catch (error) {
         setError(error);
       } finally {
@@ -24,7 +28,11 @@ export default function useFetchJson(url, options = { method: 'GET' }) {
     };
 
     fetchData();
-  }, []);
+
+    return () => {
+      canceled = true;
+    }
+  }, [url]);
 
   return [{ data, pending, error }];
 }
